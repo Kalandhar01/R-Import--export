@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, ArrowLeft } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { services } from "@/data/services";
@@ -195,6 +195,13 @@ export default function ServicesPage() {
       </div>
 
       <section className="relative overflow-hidden bg-[#050B1A] px-6 pt-32 pb-20 sm:px-10 lg:px-16 lg:pt-40 lg:pb-28">
+        <Link
+          href="/#services"
+          className="absolute left-6 top-24 z-10 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-white/50 transition hover:text-white sm:left-10 sm:top-28 lg:left-16"
+        >
+          <ArrowLeft size={14} />
+          Back to Services
+        </Link>
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute top-1/4 right-1/4 h-[400px] w-[400px] rounded-full bg-white/5 blur-[150px]" />
           <div className="absolute bottom-1/4 left-1/3 h-[300px] w-[300px] rounded-full bg-white/5 blur-[120px]" />
@@ -237,6 +244,15 @@ export default function ServicesPage() {
       </section>
 
       <WhatWeExport />
+      <div className="border-t border-gray-100 px-6 py-6 sm:px-10 lg:px-16">
+        <Link
+          href="/#services"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-gray-400 transition hover:text-gray-900"
+        >
+          <ArrowLeft size={14} />
+          Back to Services
+        </Link>
+      </div>
       <Footer />
     </main>
   );
