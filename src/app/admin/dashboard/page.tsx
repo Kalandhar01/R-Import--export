@@ -99,10 +99,10 @@ export default function Dashboard() {
         </Link>
         <div className="flex items-center gap-3">
           <Link
-            href="/admin/dashboard/works"
+            href="/admin/dashboard/our-works"
             className="rounded border border-[#e5e7eb] px-4 py-2 text-xs font-semibold text-[#6b7280] transition hover:bg-[#f8f7f4]"
           >
-            Manage Works
+            Our Works
           </Link>
           <button
             onClick={handleLogout}
