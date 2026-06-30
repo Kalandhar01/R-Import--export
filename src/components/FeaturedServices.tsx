@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { Globe, Package, ArrowRight, Search } from "lucide-react";
 
 type Product = {
   name: string;
@@ -255,46 +256,63 @@ const categories: Category[] = [
   },
 ];
 
+const categoryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+  "Spices": () => <Package className="h-3.5 w-3.5" />,
+  "Food Products": () => <Package className="h-3.5 w-3.5" />,
+  "Bamboo Salt": () => <Package className="h-3.5 w-3.5" />,
+  "Coconut Products": () => <Package className="h-3.5 w-3.5" />,
+  "Textiles & Garments": () => <Package className="h-3.5 w-3.5" />,
+  "Home Appliances": () => <Package className="h-3.5 w-3.5" />,
+  "Infrastructure Materials": () => <Package className="h-3.5 w-3.5" />,
+  "Coffee & Tea": () => <Package className="h-3.5 w-3.5" />,
+  "Agricultural Products": () => <Package className="h-3.5 w-3.5" />,
+  "Handicrafts": () => <Package className="h-3.5 w-3.5" />,
+};
+
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.05 } } };
+const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const } } };
+
 function ProductCard({ product, index }: { product: Product; index: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 24 }}
-      transition={{ duration: 0.35, delay: index * 0.05 }}
-      className="group"
+      variants={fadeUp}
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/20 hover:bg-white/[0.04] hover:shadow-[0_24px_60px_-20px_rgba(255,255,255,0.08)]"
     >
-      <div       className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/25 hover:bg-white/[0.04] hover:shadow-xl hover:shadow-white/5 hover:-translate-y-0.5">
-        <div className="relative aspect-[4/3] overflow-hidden">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-all duration-700 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050B1A] via-transparent to-transparent opacity-60" />
-          {product.available && (
-            <span className="absolute right-3 top-3 rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0a0f1a]">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-black/60" />
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-all duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050B1A] via-transparent to-transparent opacity-70" />
+        <div className="absolute bottom-3 left-3 z-10">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/60 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white/70 backdrop-blur-sm">
+            <Globe className="h-3 w-3 text-white/60" />
+            India
+          </span>
+        </div>
+        {product.available && (
+          <div className="absolute right-3 top-3 z-10">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-emerald-300 backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
               Export Ready
             </span>
-          )}
-        </div>
-        <div className="p-5">
-          <h3 className="text-base font-bold text-white transition-colors duration-300 group-hover:text-white">
-            {product.name}
-          </h3>
-          <p className="mt-2 text-xs leading-relaxed text-white/40">
-            {product.description}
-          </p>
-          <Link
-            href="/#contact"
-            className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-white/15 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
-          >
-            Request Quote
-            <span className="inline-block transition-transform duration-300 group-hover:translate-x-0.5">&rarr;</span>
-          </Link>
-        </div>
+          </div>
+        )}
+      </div>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-semibold text-sm tracking-tight text-white/90">{product.name}</h3>
+        <p className="mt-2 flex-1 text-xs leading-relaxed text-white/40">{product.description}</p>
+        <Link
+          href="/#contact"
+          className="mt-4 inline-flex items-center gap-2 self-start rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.12em] text-white/60 transition-all duration-300 hover:border-white/30 hover:bg-white/10 hover:text-white"
+        >
+          Request Quote
+          <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
+        </Link>
       </div>
     </motion.div>
   );
@@ -329,37 +347,46 @@ export default function FeaturedServices() {
           transition={{ duration: 0.6 }}
           className="mb-10 text-center sm:mb-14"
         >
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">
             Premium Exports
           </span>
           <h2 className="mt-3 font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
             Our Export Categories
           </h2>
-          <div className="mx-auto mt-4 h-0.5 w-16 bg-white/60" />
+          <div className="mx-auto mt-4 h-0.5 w-16 bg-white/40" />
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/40 sm:text-base">
             Delivering Premium South Indian Products and Industrial Solutions to
             Global Markets.
           </p>
         </motion.div>
 
-        <div className="mx-auto grid max-w-4xl grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-2.5 md:grid-cols-5">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={stagger}
+          className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-2 sm:gap-2.5"
+        >
           {categories.map((cat) => {
+            const IconComp = categoryIcons[cat.label];
             const isActive = activeCategory === cat.id;
             return (
-              <button
+              <motion.button
                 key={cat.id}
+                variants={fadeUp}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`rounded-full border px-3 py-2 text-[10px] font-bold uppercase tracking-[0.1em] transition-all duration-300 sm:text-[11px] ${
+                className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[10px] font-bold uppercase tracking-[0.1em] transition-all duration-300 sm:text-[11px] ${
                   isActive
-                    ? "border-white bg-white text-black shadow-lg shadow-white/10"
+                    ? "border-white bg-white text-[#050B1A] shadow-lg shadow-white/10"
                     : "border-white/[0.06] bg-white/[0.02] text-white/50 hover:border-white/20 hover:bg-white/[0.05] hover:text-white/80"
                 }`}
               >
+                {IconComp && <IconComp />}
                 {cat.label}
-              </button>
+              </motion.button>
             );
           })}
-        </div>
+        </motion.div>
 
         <div className="mt-10 sm:mt-14">
           <AnimatePresence mode="wait">
@@ -370,13 +397,25 @@ export default function FeaturedServices() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25 }}
             >
-              <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={stagger}
+                className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4"
+              >
                 {activeData.products.map((product, i) => (
                   <ProductCard key={product.name} product={product} index={i} />
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
+
+          {activeData.products.length === 0 && (
+            <div className="flex flex-col items-center justify-center py-24 text-center">
+              <Search className="mb-4 h-12 w-12 text-white/20" />
+              <p className="text-lg font-medium text-white/30">No products found in this category.</p>
+            </div>
+          )}
         </div>
 
         <motion.div
@@ -388,14 +427,13 @@ export default function FeaturedServices() {
         >
           <Link
             href="/services"
-            className="group inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/5 px-8 py-3.5 text-xs font-bold uppercase tracking-[0.15em] text-white/80 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
+            className="group inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/5 px-8 py-3.5 text-xs font-bold uppercase tracking-[0.15em] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
           >
             View All Export Categories
-            <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
+            <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </motion.div>
       </div>
-
     </section>
   );
 }
