@@ -21,7 +21,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const quickLinks = ["Home", "Services", "About", "Contact"];
+const quickLinks = ["Home", "Services", "About", "Contact", "RACTYSH Group"];
 const services = [
   "Import",
   "Export",
@@ -221,7 +221,7 @@ export default function Footer() {
                   <li key={item}>
                     <a
                       ref={(el) => setLinkRef(el, colIdx * 10 + i)}
-                      href="#"
+                      href={item === "RACTYSH Group" ? "https://www.ractysh.com/" : "#"}
                       className="text-sm text-slate-400 transition-all duration-300 hover:translate-x-1 hover:text-white"
                     >
                       {item}
@@ -356,7 +356,7 @@ export default function Footer() {
             <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-500 md:justify-start">
               <div className="flex items-center gap-1">
                 <Copyright size={12} />
-                <span>2025 RACTYSH GROUP. All Rights Reserved.</span>
+                <span>&copy; 2025 <Link href="https://www.ractysh.com/" className="text-slate-400 transition-colors hover:text-white">RACTYSH GROUP</Link>. All Rights Reserved.</span>
               </div>
             </div>
             <div className="flex items-center gap-3 sm:gap-4">
